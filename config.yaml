@@ -1,0 +1,55 @@
+# Project Configuration
+
+# Data paths
+data:
+  raw_dir: 'data/raw'
+  processed_dir: 'data/processed'
+  synthetic_dir: 'data/synthetic'
+  image_size: [256, 256]
+
+# GAN Configuration
+gan:
+  input_dim: 10
+  latent_dim: 100
+  lr: 0.0002
+  b1: 0.5
+  b2: 0.999
+  batch_size: 64
+  epochs: 200
+  print_freq: 100
+  sample_interval: 400
+  save_freq: 10
+
+# Few-Shot Learning Configuration
+few_shot:
+  input_dim: 10 # Example: Number of features in hormonal data
+  num_classes: 2
+  num_support: 5
+  num_query: 15
+  meta_lr: 0.001
+  adaptation_lr: 0.01
+  num_adaptation_steps: 5
+  tasks_per_epoch: 100
+  val_tasks: 50
+  epochs: 100
+  save_freq: 10
+
+# NLP Configuration
+nlp:
+  num_classes: 2
+  batch_size: 16
+  epochs: 5
+  max_length: 512
+
+# Evaluation Configuration
+evaluation:
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1
+    - auc
+
+# Results Configuration
+results:
+  path: 'results/pcos_detection_default'

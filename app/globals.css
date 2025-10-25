@@ -1,0 +1,187 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(1 0 0); /* Pure white */
+  --foreground: oklch(0.25 0.02 30);
+  --card: oklch(0.99 0.01 40); /* Very light peach for cards */
+  --card-foreground: oklch(0.25 0.02 30);
+  --popover: oklch(1 0 0); /* White */
+  --popover-foreground: oklch(0.25 0.02 30);
+  --primary: oklch(0.82 0.08 40); /* Peach nude */
+  --primary-foreground: oklch(0.2 0.02 30);
+  --secondary: oklch(0.97 0.02 35); /* Light peach background */
+  --secondary-foreground: oklch(0.25 0.02 30);
+  --muted: oklch(0.98 0.01 35); /* Very light peach */
+  --muted-foreground: oklch(0.55 0.02 30);
+  --accent: oklch(0.88 0.06 38); /* Medium peach */
+  --accent-foreground: oklch(0.25 0.02 30);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.92 0.02 35);
+  --input: oklch(0.92 0.02 35);
+  --ring: oklch(0.82 0.08 40);
+  --chart-1: oklch(0.78 0.1 40);
+  --chart-2: oklch(0.75 0.08 45);
+  --chart-3: oklch(0.72 0.06 35);
+  --chart-4: oklch(0.85 0.09 42);
+  --chart-5: oklch(0.8 0.07 38);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.99 0.01 40); /* Light peach for sidebar */
+  --sidebar-foreground: oklch(0.25 0.02 30);
+  --sidebar-primary: oklch(0.82 0.08 40);
+  --sidebar-primary-foreground: oklch(0.2 0.02 30);
+  --sidebar-accent: oklch(0.97 0.02 35);
+  --sidebar-accent-foreground: oklch(0.25 0.02 30);
+  --sidebar-border: oklch(0.92 0.02 35);
+  --sidebar-ring: oklch(0.82 0.08 40);
+}
+
+.dark {
+  --background: oklch(0.15 0.01 30);
+  --foreground: oklch(0.98 0.01 35);
+  --card: oklch(0.18 0.01 30);
+  --card-foreground: oklch(0.98 0.01 35);
+  --popover: oklch(0.18 0.01 30);
+  --popover-foreground: oklch(0.98 0.01 35);
+  --primary: oklch(0.78 0.08 40);
+  --primary-foreground: oklch(0.15 0.01 30);
+  --secondary: oklch(0.22 0.02 30);
+  --secondary-foreground: oklch(0.98 0.01 35);
+  --muted: oklch(0.22 0.02 30);
+  --muted-foreground: oklch(0.65 0.02 30);
+  --accent: oklch(0.25 0.03 38);
+  --accent-foreground: oklch(0.98 0.01 35);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.98 0.01 35);
+  --border: oklch(0.22 0.02 30);
+  --input: oklch(0.22 0.02 30);
+  --ring: oklch(0.78 0.08 40);
+  --chart-1: oklch(0.75 0.1 40);
+  --chart-2: oklch(0.7 0.08 45);
+  --chart-3: oklch(0.78 0.09 42);
+  --chart-4: oklch(0.65 0.07 35);
+  --chart-5: oklch(0.8 0.08 38);
+  --sidebar: oklch(0.18 0.01 30);
+  --sidebar-foreground: oklch(0.98 0.01 35);
+  --sidebar-primary: oklch(0.78 0.08 40);
+  --sidebar-primary-foreground: oklch(0.98 0.01 35);
+  --sidebar-accent: oklch(0.22 0.02 30);
+  --sidebar-accent-foreground: oklch(0.98 0.01 35);
+  --sidebar-border: oklch(0.22 0.02 30);
+  --sidebar-ring: oklch(0.78 0.08 40);
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-playfair), "Playfair Display", Georgia, serif;
+  --font-poppins: var(--font-poppins), "Poppins", system-ui, sans-serif;
+
+  --color-primary: #f6c9b3; /* Peach nude */
+  --color-primary-foreground: #3d2a1f;
+
+  --color-accent: #fad9c9; /* Light peach */
+  --color-accent-foreground: #3d2a1f;
+
+  --color-background: #ffffff; /* Pure white main background */
+  --color-foreground: #3d2a1f;
+  --color-card: #fef9f7; /* Very light peach for cards */
+  --color-card-foreground: #3d2a1f;
+  --color-popover: #ffffff; /* White */
+  --color-popover-foreground: #3d2a1f;
+
+  --color-muted: #fef5f1; /* Light peach for muted sections */
+  --color-muted-foreground: #6b5a4f;
+
+  --color-secondary: #fef5f1; /* Light peach for secondary backgrounds */
+  --color-secondary-foreground: #3d2a1f;
+
+  --color-border: #f0ddd3;
+  --color-input: #f0ddd3;
+  --color-ring: #f6c9b3;
+
+  --color-destructive: #dc2626;
+  --color-destructive-foreground: #ffffff;
+
+  --color-success: #a67c52;
+  --color-success-foreground: #ffffff;
+
+  --color-warning: #ea580c;
+  --color-warning-foreground: #ffffff;
+
+  --color-info: #c9a68f;
+  --color-info-foreground: #ffffff;
+
+  --radius: 0.75rem;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@media (prefers-color-scheme: dark) {
+  @theme inline {
+    --color-background: #2a1f1a;
+    --color-foreground: #fef5f1;
+    --color-card: #332822;
+    --color-card-foreground: #fef5f1;
+    --color-popover: #332822;
+    --color-popover-foreground: #fef5f1;
+
+    --color-muted: #3a2f2a;
+    --color-muted-foreground: #c9b3a8;
+
+    --color-secondary: #3a2f2a;
+    --color-secondary-foreground: #fef5f1;
+
+    --color-border: #4a3a33;
+    --color-input: #4a3a33;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+body {
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
