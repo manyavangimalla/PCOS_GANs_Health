@@ -7,9 +7,16 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Sparkles, Send, Download, FileText, MessageCircle, TrendingUp, Heart, AlertCircle } from "lucide-react"
 
+interface Message {
+  role: "user" | "assistant"
+  content: string
+  timestamp: string
+  followUpQuestions?: string[]
+}
+
 export default function AssistantPage() {
   const [message, setMessage] = useState("")
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
       content:
@@ -27,25 +34,82 @@ export default function AssistantPage() {
     "What supplements are recommended?",
   ]
 
-  const handleSend = () => {
-    if (!message.trim()) return
+  const getAIResponse = (userQuestion: string) => {
+    const responses = [
+      {
+        content:
+          "Based on your question about LH/FSH ratio, this is an important indicator for PCOS. A ratio higher than 2:1 or 3:1 may suggest PCOS. Would you like me to explain what this means for your treatment options, or do you need help understanding your specific lab results?",
+        followUp: ["Explain treatment options", "Help with my lab results", "What's a normal ratio?"],
+      },
+      {
+        content:
+          "Managing insulin resistance is key for PCOS. I recommend focusing on low-glycemic foods, regular exercise, and possibly supplements like inositol. What specific aspect would you like to explore - diet changes, exercise routines, or supplement recommendations?",
+        followUp: ["Diet changes for insulin resistance", "Best exercises for PCOS", "Tell me about inositol"],
+      },
+      {
+        content:
+          "Great question! With PCOS, it's best to limit refined carbs, sugary foods, and inflammatory foods. A low-GI diet can really help. Would you like a sample meal plan, specific food lists, or tips for eating out with PCOS?",
+        followUp: ["Show me a meal plan", "Give me food lists", "Tips for eating out"],
+      },
+      {
+        content:
+          "Hair loss with PCOS is often related to elevated androgens (male hormones). This can be managed through medication, supplements, and lifestyle changes. What would you like to know more about - treatment options, natural remedies, or how to track your progress?",
+        followUp: ["Treatment options for hair loss", "Natural remedies", "How to track progress"],
+      },
+      {
+        content:
+          "Stress significantly impacts your hormones by increasing cortisol, which can worsen PCOS symptoms and disrupt your cycle. Managing stress through mindfulness, exercise, and sleep is crucial. Would you like stress management techniques, information about the cortisol-PCOS connection, or tips for better sleep?",
+        followUp: ["Stress management techniques", "Cortisol and PCOS connection", "Better sleep tips"],
+      },
+    ]
 
-    const userMessage = {
+    return responses[Math.floor(Math.random() * responses.length)]
+  }
+
+  const handleSend = () => {
+    const trimmedMessage = message.trim()
+
+    if (!trimmedMessage) {
+      return
+    }
+
+    const userMessage: Message = {
       role: "user",
-      content: message,
+      content: trimmedMessage,
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     }
 
-    setMessages([...messages, userMessage])
+    setMessages((prev) => [...prev, userMessage])
     setMessage("")
 
-    // Simulate AI response
     setTimeout(() => {
-      const aiResponse = {
+      const response = getAIResponse(trimmedMessage)
+      const aiResponse: Message = {
         role: "assistant",
-        content:
-          "Based on your question, I can provide some insights. PCOS management typically involves a combination of lifestyle changes, medication, and regular monitoring. Would you like me to elaborate on any specific aspect?",
+        content: response.content,
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        followUpQuestions: response.followUp,
+      }
+      setMessages((prev) => [...prev, aiResponse])
+    }, 1000)
+  }
+
+  const handleQuickQuestion = (question: string) => {
+    const userMessage: Message = {
+      role: "user",
+      content: question,
+      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    }
+
+    setMessages((prev) => [...prev, userMessage])
+
+    setTimeout(() => {
+      const response = getAIResponse(question)
+      const aiResponse: Message = {
+        role: "assistant",
+        content: response.content,
+        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        followUpQuestions: response.followUp,
       }
       setMessages((prev) => [...prev, aiResponse])
     }, 1000)
@@ -97,37 +161,59 @@ export default function AssistantPage() {
                 </div>
               </CardHeader>
 
-              {/* Messages */}
-              <CardContent className="h-[500px] overflow-y-auto p-8 space-y-6 bg-gradient-to-b from-white to-[#FFF7F3]">
+              <CardContent className="h-[350px] overflow-y-auto p-8 space-y-6 bg-gradient-to-b from-white to-[#FFF7F3]">
                 {messages.map((msg, i) => (
-                  <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                    <div
-                      className={`max-w-[80%] rounded-2xl p-5 shadow-sm ${
-                        msg.role === "user"
-                          ? "bg-[#E4AFAF] text-white"
-                          : "bg-white border border-[#F6C9B3]/30 text-[#6B4F4F]"
-                      }`}
-                    >
-                      <p className="text-sm leading-relaxed">{msg.content}</p>
-                      <p className={`text-xs mt-2 ${msg.role === "user" ? "text-white/80" : "text-[#8B6B61]"}`}>
-                        {msg.timestamp}
-                      </p>
+                  <div key={i} className="space-y-3">
+                    <div className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+                      <div
+                        className={`max-w-[80%] rounded-2xl p-5 shadow-sm ${
+                          msg.role === "user"
+                            ? "bg-[#E4AFAF] text-white"
+                            : "bg-white border border-[#F6C9B3]/30 text-[#6B4F4F]"
+                        }`}
+                      >
+                        <p className="text-sm leading-relaxed">{msg.content}</p>
+                        <p className={`text-xs mt-2 ${msg.role === "user" ? "text-white/80" : "text-[#8B6B61]"}`}>
+                          {msg.timestamp}
+                        </p>
+                      </div>
                     </div>
+
+                    {msg.role === "assistant" && msg.followUpQuestions && (
+                      <div className="flex flex-wrap gap-2 justify-start ml-2">
+                        {msg.followUpQuestions.map((question, idx) => (
+                          <Button
+                            key={idx}
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleQuickQuestion(question)}
+                            className="text-xs bg-[#FFF7F3] border border-[#F6C9B3] hover:bg-[#FCE9E3] hover:border-[#E4AFAF] transition-all duration-300 rounded-full px-4 py-2 h-auto"
+                          >
+                            {question}
+                          </Button>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ))}
               </CardContent>
 
-              {/* Input */}
               <div className="border-t bg-white p-6">
                 <div className="flex gap-3">
                   <Input
                     placeholder="Ask me anything about PCOS, hormones, or women's health..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    onKeyPress={(e) => e.key === "Enter" && handleSend()}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault()
+                        handleSend()
+                      }
+                    }}
                     className="flex-1 h-14 text-base border-2 border-[#F6C9B3]/30 focus:border-[#E4AFAF] rounded-xl"
                   />
                   <Button
+                    type="button"
                     onClick={handleSend}
                     size="lg"
                     className="px-8 h-14 bg-[#E4AFAF] hover:bg-[#D89FA0] shadow-[0px_4px_10px_rgba(228,175,175,0.4)] hover:scale-105 transition-all duration-300 rounded-xl"
@@ -159,7 +245,7 @@ export default function AssistantPage() {
                     variant="outline"
                     size="sm"
                     className="w-full justify-start text-left h-auto py-4 px-5 bg-[#FFF7F3] border border-[#F6C9B3] hover:bg-[#FCE9E3] hover:border-[#E4AFAF] transition-all duration-300 rounded-xl text-[#6B4F4F]"
-                    onClick={() => setMessage(question)}
+                    onClick={() => handleQuickQuestion(question)}
                   >
                     <span className="text-sm leading-relaxed">{question}</span>
                   </Button>

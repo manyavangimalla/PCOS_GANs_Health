@@ -128,7 +128,7 @@ export function Navigation() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                variant={isGroupActive(["/community", "/assistant", "/reports"]) ? "default" : "ghost"}
+                variant={isGroupActive(["/community", "/share", "/reports"]) ? "default" : "ghost"}
                 size="default"
                 className="font-medium"
               >
@@ -142,8 +142,8 @@ export function Navigation() {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/assistant" className="cursor-pointer">
-                  AI Assistant
+                <Link href="/share" className="cursor-pointer">
+                  Share Your Thoughts
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
@@ -300,12 +300,12 @@ export function Navigation() {
             </Button>
             <Button
               asChild
-              variant={pathname === "/assistant" ? "default" : "ghost"}
+              variant={pathname === "/share" ? "default" : "ghost"}
               size="default"
               className="justify-start font-medium pl-6"
             >
-              <Link href="/assistant" onClick={() => setMobileMenuOpen(false)}>
-                AI Assistant
+              <Link href="/share" onClick={() => setMobileMenuOpen(false)}>
+                Share Your Thoughts
               </Link>
             </Button>
             <Button
