@@ -36,7 +36,7 @@ export function Navigation() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                variant={isGroupActive(["/dashboard", "/assessment", "/results", "/tracker", "/data-upload"]) ? "default" : "ghost"}
+                variant={isGroupActive(["/dashboard", "/assessment", "/results", "/tracker", "/data-upload", "/model-accuracy"]) ? "default" : "ghost"}
                 size="default"
                 className="font-medium"
               >
@@ -62,6 +62,11 @@ export function Navigation() {
               <DropdownMenuItem asChild>
                 <Link href="/tracker" className="cursor-pointer">
                   Cycle Tracker
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/model-accuracy" className="cursor-pointer">
+                  Model Accuracy
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
@@ -225,6 +230,16 @@ export function Navigation() {
             >
               <Link href="/tracker" onClick={() => setMobileMenuOpen(false)}>
                 Cycle Tracker
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant={pathname === "/model-accuracy" ? "default" : "ghost"}
+              size="default"
+              className="justify-start font-medium pl-6"
+            >
+              <Link href="/model-accuracy" onClick={() => setMobileMenuOpen(false)}>
+                Model Accuracy
               </Link>
             </Button>
             <Button
