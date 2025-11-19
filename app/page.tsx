@@ -3,36 +3,15 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Activity, Heart, Calendar, TrendingUp, ArrowRight, Sparkles, Users, BookOpen } from "lucide-react"
+import { Activity, Heart, Calendar, TrendingUp, ArrowRight, Sparkles, Users, BookOpen } from 'lucide-react'
 import { useEffect, useState } from "react"
 
 export default function HomePage() {
   const [mounted, setMounted] = useState(false)
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
-  const [stats, setStats] = useState({ users: 0, assessments: 0, communities: 0 })
 
   useEffect(() => {
     setMounted(true)
-
-    // Animate stats counter
-    const duration = 2000
-    const steps = 60
-    const interval = duration / steps
-
-    let step = 0
-    const timer = setInterval(() => {
-      step++
-      const progress = step / steps
-      setStats({
-        users: Math.floor(15000 * progress),
-        assessments: Math.floor(50000 * progress),
-        communities: Math.floor(200 * progress),
-      })
-
-      if (step >= steps) clearInterval(timer)
-    }, interval)
-
-    return () => clearInterval(timer)
   }, [])
 
   useEffect(() => {
@@ -112,35 +91,6 @@ export default function HomePage() {
               >
                 <Link href="/dashboard">View Dashboard</Link>
               </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-b bg-background py-12">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-3">
-            <div
-              className={`text-center transition-all duration-700 ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
-            >
-              <div className="mb-2 font-serif text-4xl font-bold text-primary">{stats.users.toLocaleString()}+</div>
-              <div className="text-sm text-muted-foreground">Women Empowered</div>
-            </div>
-            <div
-              className={`text-center transition-all duration-700 delay-100 ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
-            >
-              <div className="mb-2 font-serif text-4xl font-bold text-primary">
-                {stats.assessments.toLocaleString()}+
-              </div>
-              <div className="text-sm text-muted-foreground">Health Assessments</div>
-            </div>
-            <div
-              className={`text-center transition-all duration-700 delay-200 ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
-            >
-              <div className="mb-2 font-serif text-4xl font-bold text-primary">
-                {stats.communities.toLocaleString()}+
-              </div>
-              <div className="text-sm text-muted-foreground">Support Communities</div>
             </div>
           </div>
         </div>

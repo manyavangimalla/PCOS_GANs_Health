@@ -1,10 +1,10 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Heart, Menu, X, ChevronDown } from "lucide-react"
+import { Heart, Menu, X, ChevronDown } from 'lucide-react'
 import { useState } from "react"
 
 export function Navigation() {
@@ -36,7 +36,7 @@ export function Navigation() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                variant={isGroupActive(["/dashboard", "/assessment", "/results", "/tracker"]) ? "default" : "ghost"}
+                variant={isGroupActive(["/dashboard", "/assessment", "/results", "/tracker", "/data-upload"]) ? "default" : "ghost"}
                 size="default"
                 className="font-medium"
               >
@@ -62,6 +62,11 @@ export function Navigation() {
               <DropdownMenuItem asChild>
                 <Link href="/tracker" className="cursor-pointer">
                   Cycle Tracker
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/data-upload" className="cursor-pointer">
+                  Data Upload
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -220,6 +225,16 @@ export function Navigation() {
             >
               <Link href="/tracker" onClick={() => setMobileMenuOpen(false)}>
                 Cycle Tracker
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant={pathname === "/data-upload" ? "default" : "ghost"}
+              size="default"
+              className="justify-start font-medium pl-6"
+            >
+              <Link href="/data-upload" onClick={() => setMobileMenuOpen(false)}>
+                Data Upload
               </Link>
             </Button>
 
